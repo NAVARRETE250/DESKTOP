@@ -3,24 +3,20 @@ package errorHandling;
 public class ErrorHandler {
 	
 	
-	public ErrorHandler(String errorMessage) {
-		handleException(errorMessage);
+	public ErrorHandler() {
 	}
-	
-	public ErrorHandler(Exception e, String errorMessage) {
-		handleException(e, errorMessage);
-	}
+
 	
 	//Checked Exception handler
-	public void handleException(Exception e, String errorMessage) {
+	public String handleException(Exception e, String errorMessage) {
 		String className = e.getClass().getName().toString();
 		
-		System.out.println(className + "\n" + errorMessage);
+		return className + "\n" + errorMessage;
 	}
 	
 	//Custom Exception handler
-	public void handleException(String errorMessage) {
-		System.out.println(errorMessage);			
+	public String handleException(String errorMessage) {
+		return errorMessage;			
 	}
 	
 	

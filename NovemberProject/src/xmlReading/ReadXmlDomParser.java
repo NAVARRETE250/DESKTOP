@@ -33,7 +33,6 @@ public ReadXmlDomParser(){};
 
       try {
 
-          // optional, but recommended
           // process XML securely, avoid attacks like XML External Entities (XXE)
           dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
@@ -42,14 +41,11 @@ public ReadXmlDomParser(){};
 
           Document doc = db.parse(new File(FILENAME));
 
-          // optional, but recommended
-          // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
           doc.getDocumentElement().normalize();
 
           System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
           System.out.println("------");
 
-          // get <staff>
           NodeList list = doc.getElementsByTagName("configuracion");
 
           for (int temp = 0; temp < list.getLength(); temp++) {
@@ -60,27 +56,6 @@ public ReadXmlDomParser(){};
 
                   Element element = (Element) node;
 
-                  // get staff's attribute
-//                  String id = element.getAttribute("id");
-
-                  // get text
-//                  String name = element.getElementsByTagName("name").item(0).getTextContent();
-//                  String platform = element.getElementsByTagName("platform").item(0).getTextContent();
-//                  String publisher = element.getElementsByTagName("publisher").item(0).getTextContent();
-//
-//                  NodeList priceNodeList = element.getElementsByTagName("price");
-//                  String price = priceNodeList.item(0).getTextContent();
-
-                  // get salary's attribute
-//                  String currency = priceNodeList.item(0).getAttributes().getNamedItem("currency").getTextContent();
-//
-//                  System.out.println("Current Element :" + node.getNodeName());
-//                  System.out.println("Game Id : " + id);
-//                  System.out.println("Name : " + name);
-//                  System.out.println("Platform : " + platform);
-//                  System.out.println("Publisher : " + publisher);
-//                  System.out.printf("Price [Currency] : %,.2f [%s]%n%n", Float.parseFloat(price), currency);
-                  
                   language = element.getElementsByTagName("idioma").item(0).getTextContent();
                   timeout = element.getElementsByTagName("timeout").item(0).getTextContent();
                   maxQuestions = element.getElementsByTagName("max_preguntas").item(0).getTextContent();

@@ -50,29 +50,24 @@ public class TestClass {
 					y = 5 / 0;
 					
 				} catch (CustomException e) {   //This catches any custom exception we design
-					
+					System.out.println(e.getMessageToShow());
 				// We add the checked exceptions that might come out at the end
+				//Here they are printed, but you can do whatever you want with the returned String
 				} catch (ArrayIndexOutOfBoundsException e) {
-					new ErrorHandler(e, e.getMessage());
+					System.out.println(new ErrorHandler().handleException(e, e.getMessage()));
 				} catch (ArithmeticException e) {
-					new ErrorHandler(e, e.getMessage());
+					System.out.println(new ErrorHandler().handleException(e, e.getMessage()));
 				} catch (InputMismatchException e) {
-					new ErrorHandler(e, "Please, enter only integers");
+					System.out.println(new ErrorHandler().handleException(e, "Please, enter only integers"));
 					//Have to initialize this again because this error causes the scanner to stop
 					sc = new Scanner(System.in); 
 				}
 				//Still executes after throwing Exception
-				System.out.println("All okay");	
+				System.out.println("All okay");
 				
 			}
 			
 		}
 		
-		//Custom Exception Class for handling Exceptions we design
-		class CustomException extends Exception {
-			public CustomException(String errorMessage) {
-				//Calls error handler
-				new ErrorHandler(errorMessage);
-			}
-		} 
+		
 }
