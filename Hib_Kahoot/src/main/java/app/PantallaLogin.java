@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import errorHandling.CustomException;
 import errorHandling.ErrorHandler;
 import hibernate.dao.UsuarioDao;
 import hibernate.model.Usuario;
@@ -22,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class PantallaLogin extends JFrame {
 
@@ -58,6 +60,7 @@ public class PantallaLogin extends JFrame {
 		contentPane.setBackground(new Color(153, 102, 204));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setTitle("Pantalla Login");
 		
 		JLabel lblKadamm = new JLabel("KADAMM!");
 		lblKadamm.setForeground(new Color(128, 0, 0));
@@ -88,20 +91,25 @@ public class PantallaLogin extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDao usDao = new UsuarioDao();
+				try {
 				user = usDao.getUsuarioByName(usuarioField.getText());
 				if (user == null) {
-					//Componente error
-					new ErrorHandler("Campo USUARIO incorrecto");
+					throw new CustomException("USUARIO no encontrado");
 				}else {
 					if (!user.getContraseña().equals(contraField.getText())) {
-						//Componente error
-						new ErrorHandler("CONTRASEÑA incorrecta");
+						throw new CustomException("CONTRASEÑA incorrecta");
 					}else {
 						//Abrir ventana gestión kahoots
-						System.out.println("ABRIENDO VENTANA GESTION KAHOOTS");
+						kahootManagerScreen kms = new kahootManagerScreen();
+						kms.setVisible(true);
+						dispose();
 					}
 				}
 				
+			}catch(CustomException ce) {
+				JOptionPane.showMessageDialog(null, ce.getMessageToShow(), "Aviso",
+						JOptionPane.ERROR_MESSAGE);
+			}
 			}
 			
 		});
