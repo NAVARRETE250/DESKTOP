@@ -1,7 +1,9 @@
 package kahootManagement;
 
+
 import hibernate.dao.*;
 import hibernate.model.Kahoot;
+
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,7 +26,9 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 import javax.swing.BoxLayout;
+
 
 public class kahootManagerScreen extends JFrame {
 
@@ -149,6 +154,7 @@ public class kahootManagerScreen extends JFrame {
 					.addGap(128))
 		);
 		
+
 		JPanel kahootPanel = new JPanel();
 		List<Kahoot> kahoots = new KahootDao().getAllKahoots();
 		
@@ -163,13 +169,16 @@ public class kahootManagerScreen extends JFrame {
 		kahootScrollPane.setViewportView(kahootPanel);
 		kahootPanel.setLayout(new BoxLayout(kahootPanel, BoxLayout.Y_AXIS));
 		
+
 		JList selectedThemeList = new JList();
 		selectedThemescrollPane.setViewportView(selectedThemeList);
 		
 		JList themeList = new JList();
 		themeScrollPane.setViewportView(themeList);
 		themeList.setModel(new AbstractListModel() {
+
 			String[] values = new String[] {};
+
 			public int getSize() {
 				return values.length;
 			}
@@ -177,6 +186,21 @@ public class kahootManagerScreen extends JFrame {
 				return values[index];
 			}
 		});
+		
+		JList kahootList = new JList();
+		kahootList.setModel(new AbstractListModel() {
+			String[] values = new String[];
+
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+
+		kahootScrollPane.setViewportView(kahootList);
+
 		contentPane.setLayout(gl_contentPane);
 		
 		btnSelectTheme.addActionListener((ActionListener) new ActionListener() {
@@ -184,6 +208,7 @@ public class kahootManagerScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Needs functionality
+
 				
 			}
 		});
