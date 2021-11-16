@@ -1,9 +1,14 @@
 package kahootManagement;
 
+import hibernate.dao.*;
+import hibernate.model.Kahoot;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +23,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
 
 public class kahootManagerScreen extends JFrame {
 
@@ -143,13 +149,27 @@ public class kahootManagerScreen extends JFrame {
 					.addGap(128))
 		);
 		
+		JPanel kahootPanel = new JPanel();
+		List<Kahoot> kahoots = new KahootDao().getAllKahoots();
+		
+		for (int i = 0; i < kahoots.size(); i++) {
+			JPanel newSubPanel = new JPanel();
+			JLabel kahootTitle = new JLabel(kahoots.get(i).getTitulo());
+			newSubPanel.add(kahootTitle);
+			newSubPanel.add(new JButton("Play"));
+			kahootPanel.add(newSubPanel);
+		}
+
+		kahootScrollPane.setViewportView(kahootPanel);
+		kahootPanel.setLayout(new BoxLayout(kahootPanel, BoxLayout.Y_AXIS));
+		
 		JList selectedThemeList = new JList();
 		selectedThemescrollPane.setViewportView(selectedThemeList);
 		
 		JList themeList = new JList();
 		themeScrollPane.setViewportView(themeList);
 		themeList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Tema l", "Tema m", "Tema n", "Tema o", "Tema p", "Tema q", "Tema r", "Tema s", "Tema t"};
+			String[] values = new String[] {};
 			public int getSize() {
 				return values.length;
 			}
@@ -157,25 +177,13 @@ public class kahootManagerScreen extends JFrame {
 				return values[index];
 			}
 		});
-		
-		JList kahootList = new JList();
-		kahootList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"nom Kahoot 1", "nom Kahoot 2", "nom Kahoot 3", "nom Kahoot 4", "nom Kahoot 5", "nom Kahoot 6", "nom Kahoot 7", "nom Kahoot 8", "nom Kahoot 9"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		kahootScrollPane.setViewportView(kahootList);
 		contentPane.setLayout(gl_contentPane);
 		
 		btnSelectTheme.addActionListener((ActionListener) new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Needs funcionality
+				//Needs functionality
 				
 			}
 		});
