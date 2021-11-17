@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import hibernate.model.Concursante;
+import hibernate.model.Usuario;
 import hibernate.util.HibernateUtil;
 
 public class ConcursanteDao {
@@ -96,6 +97,27 @@ public class ConcursanteDao {
 			if(transaction != null) {
 				transaction.rollback();	
 			}
+		}
+	}
+	
+	public boolean concursanteExists(String nombre) {
+		Transaction transaction = null;
+		Concursante concursante = null;
+		
+		try(Session session = HibernateUtil.getSessionFactory().openSession()){
+			transaction = session.beginTransaction();
+			concursante = (Concursante) session.createQuery("from concursante c where c.nickname='"+nombre+"'").uniqueResult();
+			transaction.commit();
+		}catch (Exception e) {
+			if(transaction != null) {
+				transaction.rollback();	
+			}
+		}
+		
+		if(concursante == null) {
+			return false;
+		}else {
+			return true;
 		}
 	}
 

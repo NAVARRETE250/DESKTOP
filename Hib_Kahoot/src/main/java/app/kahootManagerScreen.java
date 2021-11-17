@@ -1,9 +1,17 @@
 package app;
 
+import hibernate.dao.*;
+import hibernate.model.Kahoot;
+import hibernate.model.Pregunta;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,8 +26,10 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
 
 public class kahootManagerScreen extends JFrame {
+	private static Kahoot kahoot;
 
 	private JPanel contentPane;
 
@@ -48,8 +58,6 @@ public class kahootManagerScreen extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		setTitle("Kahoot Manager");
-		setLocationRelativeTo(null);
 		
 		JLabel lblKahoots = new JLabel("Kahoots");
 		
@@ -145,13 +153,52 @@ public class kahootManagerScreen extends JFrame {
 					.addGap(128))
 		);
 		
+		JPanel kahootPanel = new JPanel();
+		final List<Kahoot> kahoots = new KahootDao().getAllKahoots();
+		
+		for (int i = 0; i < kahoots.size(); i++) {
+			JPanel newSubPanel = new JPanel();
+			JLabel kahootTitle = new JLabel(kahoots.get(i).getTitulo());
+			newSubPanel.add(kahootTitle);
+			final PlayButton playButton = new PlayButton("Play",i);
+			newSubPanel.add(playButton);
+			playButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int posicion = playButton.getPosicion();
+					setKahoot(kahoots.get(posicion));
+					System.out.println("SE JUGARA EL KAHOOT "+kahoots.get(posicion).getTitulo());
+					Kahoot k = getKahoot();
+					List<Pregunta> preguntas = new KahootDao().getPreguntas(k);
+					for (Pregunta pregunta : preguntas) {
+						System.out.println(pregunta.getEnunciado());
+					}
+					SalaDeEspera sde;
+					try {
+						sde = new SalaDeEspera();
+						sde.setVisible(true);
+					} catch (SocketException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (UnknownHostException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			});
+			kahootPanel.add(newSubPanel);
+		}
+
+		kahootScrollPane.setViewportView(kahootPanel);
+		kahootPanel.setLayout(new BoxLayout(kahootPanel, BoxLayout.Y_AXIS));
+		
 		JList selectedThemeList = new JList();
 		selectedThemescrollPane.setViewportView(selectedThemeList);
 		
 		JList themeList = new JList();
 		themeScrollPane.setViewportView(themeList);
 		themeList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Tema l", "Tema m", "Tema n", "Tema o", "Tema p", "Tema q", "Tema r", "Tema s", "Tema t"};
+			String[] values = new String[] {};
 			public int getSize() {
 				return values.length;
 			}
@@ -159,27 +206,49 @@ public class kahootManagerScreen extends JFrame {
 				return values[index];
 			}
 		});
-		
-		JList kahootList = new JList();
-		kahootList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"nom Kahoot 1", "nom Kahoot 2", "nom Kahoot 3", "nom Kahoot 4", "nom Kahoot 5", "nom Kahoot 6", "nom Kahoot 7", "nom Kahoot 8", "nom Kahoot 9"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		kahootScrollPane.setViewportView(kahootList);
 		contentPane.setLayout(gl_contentPane);
 		
 		btnSelectTheme.addActionListener((ActionListener) new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Needs funcionality
+				//Needs functionality
 				
 			}
 		});
+		btnCreateKahoot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				kahootCreationScreen kcs = new kahootCreationScreen();
+				kcs.setVisible(true);
+			}
+			
+		});
 	}
+
+	public static Kahoot getKahoot() {
+		return kahoot;
+	}
+
+	public void setKahoot(Kahoot kahoot) {
+		this.kahoot = kahoot;
+	}
+	
+}
+class PlayButton extends JButton{
+	private int posicion;
+
+	public PlayButton(String texto, int posicion) {
+		super();
+		this.setText(texto);
+		this.posicion = posicion;
+	}
+
+	public int getPosicion() {
+		return posicion;
+	}
+
+	public void setPosicion(int posicion) {
+		this.posicion = posicion;
+	}
+	
 }
