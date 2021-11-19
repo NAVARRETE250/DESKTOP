@@ -1,8 +1,8 @@
 package readXML;
 public class DesktopTemplate {
 	private String language;
-    private String timeout;
-    private String maxQuestions;
+    private int timeout;
+    private int maxQuestions;
      
 	 public static void main(String[] args) {
 		DesktopTemplate dt = new DesktopTemplate();
@@ -33,19 +33,19 @@ public class DesktopTemplate {
 		this.language = language;
 	}
 
-	public String getTimeout() {
+	public int getTimeout() {
 		return timeout;
 	}
 
-	public void setTimeout(String timeout) {
-		this.timeout = timeout;
+	public void setTimeout(int i) {
+		this.timeout = i;
 	}
 
-	public String getMaxQuestions() {
+	public int getMaxQuestions() {
 		return maxQuestions;
 	}
 
-	public void setMaxQuestions(String maxQuestions) {
+	public void setMaxQuestions(int maxQuestions) {
 		this.maxQuestions = maxQuestions;
 	}
 	 

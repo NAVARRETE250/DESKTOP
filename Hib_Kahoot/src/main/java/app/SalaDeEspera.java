@@ -45,7 +45,7 @@ public class SalaDeEspera extends JFrame {
 	 * @throws UnknownHostException 
 	 */
 	public SalaDeEspera() throws SocketException, UnknownHostException {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,7 +72,7 @@ public class SalaDeEspera extends JFrame {
 		
 		final JLabel lblTempo = new JLabel("");
 		
-		JButton btnComenzar = new JButton("comenzar");
+		JButton btnComenzar = new JButton("Comenzar");
 		btnComenzar.addActionListener(new ActionListener() {
 
 			@Override
@@ -88,7 +88,8 @@ public class SalaDeEspera extends JFrame {
 		                i--;
 		                if (i < 0) {
 		                    timer.cancel();
-		                    lblTempo.setText("Time Over");
+		                    PantallaConcurso pc = new PantallaConcurso(0);
+		    				pc.setVisible(true);
 		                }
 		            }
 		        }, 0, 1000);

@@ -6,7 +6,9 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import hibernate.model.Kahoot;
 import hibernate.model.Pregunta;
+import hibernate.model.Respuesta;
 import hibernate.util.HibernateUtil;
 
 public class PreguntaDao {
@@ -96,5 +98,23 @@ public class PreguntaDao {
 				transaction.rollback();	
 			}
 		}
+	}
+	public List<Respuesta> getRespuestas(Pregunta pregunta){
+		Transaction transaction = null;
+		List<Respuesta> respuestas = new ArrayList<Respuesta>();
+		
+		try(Session session = HibernateUtil.getSessionFactory().openSession()){
+			transaction = session.beginTransaction();
+			
+			respuestas = session.createQuery("from respuesta r where r.id_pregunta = "+pregunta.getId_pregunta()).list();
+
+			transaction.commit();
+		}catch (Exception e) {
+			if(transaction != null) {
+				transaction.rollback();	
+			}
+		}
+		
+		return respuestas;
 	}
 }

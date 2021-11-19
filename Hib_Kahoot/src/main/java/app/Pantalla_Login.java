@@ -33,6 +33,9 @@ public class Pantalla_Login extends JFrame {
 	private JTextField usuarioField;
 	private JPasswordField contraField;
 	static Usuario user;
+	private static String leng;
+	private static int maxQuestions;
+	private static int timeout;
 
 	/**
 	 * Launch the application.
@@ -40,7 +43,10 @@ public class Pantalla_Login extends JFrame {
 	public static void main(String[] args) {
 		DesktopTemplate deskTemp = new DesktopTemplate();
 		deskTemp.readConfigFile();
-		System.out.println(deskTemp.getLanguage());
+		System.out.println("Lenguaje: "+deskTemp.getLanguage()+"\nMax Preguntas: "+deskTemp.getMaxQuestions()+"\nTimeout: "+deskTemp.getTimeout());
+		leng = deskTemp.getLanguage();
+		maxQuestions = deskTemp.getMaxQuestions();
+		timeout = deskTemp.getTimeout();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -188,4 +194,37 @@ public class Pantalla_Login extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
+
+	public static Usuario getUser() {
+		return user;
+	}
+
+	public static void setUser(Usuario user) {
+		Pantalla_Login.user = user;
+	}
+
+	public static String getLeng() {
+		return leng;
+	}
+
+	public static void setLeng(String leng) {
+		Pantalla_Login.leng = leng;
+	}
+
+	public static int getMaxQuestions() {
+		return maxQuestions;
+	}
+
+	public static void setMaxQuestions(int maxQuestions) {
+		Pantalla_Login.maxQuestions = maxQuestions;
+	}
+
+	public static int getTimeout() {
+		return timeout;
+	}
+
+	public static void setTimeout(int timeout) {
+		Pantalla_Login.timeout = timeout;
+	}
+	
 }

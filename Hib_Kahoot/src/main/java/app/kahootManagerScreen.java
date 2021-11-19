@@ -58,6 +58,7 @@ public class kahootManagerScreen extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setTitle("Kahoot Manager");
 		
 		JLabel lblKahoots = new JLabel("Kahoots");
 		
@@ -176,6 +177,7 @@ public class kahootManagerScreen extends JFrame {
 					try {
 						sde = new SalaDeEspera();
 						sde.setVisible(true);
+						dispose();
 					} catch (SocketException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -220,6 +222,7 @@ public class kahootManagerScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				kahootCreationScreen kcs = new kahootCreationScreen();
 				kcs.setVisible(true);
+				
 			}
 			
 		});

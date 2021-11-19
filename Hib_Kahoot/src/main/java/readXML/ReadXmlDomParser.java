@@ -19,8 +19,8 @@ public class ReadXmlDomParser {
   private static final String FILENAME = "./config.xml";
 
   private String language;
-  private String timeout;
-  private String maxQuestions;
+  private int timeout;
+  private int maxQuestions;
   
 
 
@@ -55,8 +55,8 @@ public ReadXmlDomParser(){};
                   Element element = (Element) node;
 
                   language = element.getElementsByTagName("idioma").item(0).getTextContent();
-                  timeout = element.getElementsByTagName("timeout").item(0).getTextContent();
-                  maxQuestions = element.getElementsByTagName("max_preguntas").item(0).getTextContent();
+                  timeout = Integer.parseInt(element.getElementsByTagName("timeout").item(0).getTextContent());
+                  maxQuestions = Integer.parseInt(element.getElementsByTagName("max_preguntas").item(0).getTextContent());
                  
                   
                   
@@ -79,22 +79,22 @@ public ReadXmlDomParser(){};
 	}
 
 
-	public String getTimeout() {
+	public int getTimeout() {
 		return timeout;
 	}
 
 
-	public void setTimeout(String timeout) {
+	public void setTimeout(int timeout) {
 		this.timeout = timeout;
 	}
 
 
-	public String getMaxQuestions() {
+	public int getMaxQuestions() {
 		return maxQuestions;
 	}
 
 
-	public void setMaxQuestions(String maxQuestions) {
+	public void setMaxQuestions(int maxQuestions) {
 		this.maxQuestions = maxQuestions;
 	}
   
