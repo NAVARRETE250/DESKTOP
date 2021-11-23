@@ -1,4 +1,4 @@
-package hibernate.model;
+package main.java.hibernate.model;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class Usuario {
 	@Column(name = "nombre")
 	private String nombre;
 	
-	@Column(name = "contraseña")
-	private String contraseña;
+	@Column(name = "contrasenia")
+	private String contrasenia;
 	
 	@OneToMany(mappedBy = "id_usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Kahoot> kahoots;
@@ -33,10 +33,10 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(String nombre, String contraseña) {
+	public Usuario(String nombre, String contrasenia) {
 		super();
 		this.nombre = nombre;
-		this.contraseña = contraseña;
+		this.contrasenia = contrasenia;
 	}
 
 	public int getId_usuario() {
@@ -55,12 +55,12 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasenia() {
+		return contrasenia;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
 	
 	

@@ -1,15 +1,15 @@
-package hibernate.app;
+package main.java.hibernate.app;
 
 import java.util.List;
 
-import hibernate.dao.KahootDao;
-import hibernate.dao.PreguntaDao;
-import hibernate.dao.RespuestaDao;
-import hibernate.dao.UsuarioDao;
-import hibernate.model.Kahoot;
-import hibernate.model.Pregunta;
-import hibernate.model.Respuesta;
-import hibernate.model.Usuario;
+import main.java.hibernate.dao.KahootDao;
+import main.java.hibernate.dao.PreguntaDao;
+import main.java.hibernate.dao.RespuestaDao;
+import main.java.hibernate.dao.UsuarioDao;
+import main.java.hibernate.model.Kahoot;
+import main.java.hibernate.model.Pregunta;
+import main.java.hibernate.model.Respuesta;
+import main.java.hibernate.model.Usuario;
 
 public class App {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package errorHandling;
+package main.java.errorHandling;
 
 public class CustomException extends Exception{
 	//Custom Exception Class for handling Exceptions we design

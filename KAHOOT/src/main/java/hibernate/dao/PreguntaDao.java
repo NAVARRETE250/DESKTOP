@@ -1,4 +1,4 @@
-package hibernate.dao;
+package main.java.hibernate.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import hibernate.model.Pregunta;
-import hibernate.util.HibernateUtil;
+import main.java.hibernate.model.Pregunta;
+import main.java.hibernate.util.HibernateUtil;
 
 public class PreguntaDao {
 	public PreguntaDao() {}

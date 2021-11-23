@@ -1,4 +1,4 @@
-package hibernate.dao;
+package main.java.hibernate.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.internal.build.AllowSysOut;
 
-import hibernate.model.Kahoot;
-import hibernate.model.Pregunta;
-import hibernate.util.HibernateUtil;
+import main.java.hibernate.model.Kahoot;
+import main.java.hibernate.model.Pregunta;
+import main.java.hibernate.util.HibernateUtil;
 
 public class KahootDao {
 	public KahootDao() {}

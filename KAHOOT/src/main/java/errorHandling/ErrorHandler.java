@@ -1,4 +1,4 @@
-package errorHandling;
+package main.java.errorHandling;
 
 import javax.swing.JOptionPane;
 

@@ -1,4 +1,4 @@
-package hibernate.util;
+package main.java.hibernate.util;
 
 import java.util.Properties;
 
@@ -8,12 +8,13 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-import hibernate.model.Usuario;
-import hibernate.model.Kahoot;
-import hibernate.model.Concursante;
-import hibernate.model.Concurso;
-import hibernate.model.Pregunta;
-import hibernate.model.Respuesta;
+import main.java.hibernate.model.Usuario;
+import main.java.hibernate.model.Kahoot;
+import main.java.hibernate.model.Concursante;
+import main.java.hibernate.model.Concurso;
+import main.java.hibernate.model.Pregunta;
+import main.java.hibernate.model.Respuesta;
+import main.java.hibernate.model.RespuestaConcurso;
 
 
 public class HibernateUtil {
@@ -23,7 +24,7 @@ public class HibernateUtil {
 		if (sessionFactory == null) {
 			try {
 				Configuration configuration = new Configuration();
-
+				
 				// Hibernate settings equivalent to hibernate.cfg.xml's properties
 				Properties settings = new Properties();
 				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
@@ -31,8 +32,8 @@ public class HibernateUtil {
 				settings.put(Environment.URL, "jdbc:mysql://localhost:3306/Kahoot");
 				// Nombre user
 				settings.put(Environment.USER, "root");
-				// Nombre contraseña
-				settings.put(Environment.PASS, "Root123_");
+				// Nombre contrasenia
+				settings.put(Environment.PASS, "");
 				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 
 				settings.put(Environment.SHOW_SQL, "true");
@@ -43,13 +44,13 @@ public class HibernateUtil {
 
 				configuration.setProperties(settings);
 				
-				//configuration.addAnnotatedClass(Table1.class);
 				configuration.addAnnotatedClass(Usuario.class);
 				configuration.addAnnotatedClass(Kahoot.class);
 				configuration.addAnnotatedClass(Concursante.class);
 				configuration.addAnnotatedClass(Concurso.class);
 				configuration.addAnnotatedClass(Pregunta.class);
 				configuration.addAnnotatedClass(Respuesta.class);
+				configuration.addAnnotatedClass(RespuestaConcurso.class);
 
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();

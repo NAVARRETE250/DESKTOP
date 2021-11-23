@@ -1,4 +1,4 @@
-package hibernate.dao;
+package main.java.hibernate.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import hibernate.model.Usuario;
-import hibernate.util.HibernateUtil;
+import main.java.hibernate.model.Usuario;
+import main.java.hibernate.util.HibernateUtil;
 
 public class UsuarioDao {
 	public UsuarioDao() {}
