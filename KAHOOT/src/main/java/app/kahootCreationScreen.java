@@ -1,4 +1,4 @@
-package app;
+package main.java.app;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -26,14 +26,15 @@ import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 
-import errorHandling.*;
-import hibernate.dao.KahootDao;
-import hibernate.dao.PreguntaDao;
-import hibernate.dao.RespuestaDao;
-import hibernate.model.Kahoot;
-import hibernate.model.Pregunta;
-import hibernate.model.Respuesta;
-import hibernate.model.Usuario;
+import main.java.errorHandling.*;
+import main.java.hibernate.dao.KahootDao;
+import main.java.hibernate.dao.PreguntaDao;
+import main.java.hibernate.dao.RespuestaDao;
+import main.java.hibernate.model.Kahoot;
+import main.java.hibernate.model.Pregunta;
+import main.java.hibernate.model.Respuesta;
+import main.java.hibernate.model.Usuario;
+import main.java.readXML.KahootConfiguration;
 
 public class kahootCreationScreen extends JFrame {
 
@@ -47,26 +48,11 @@ public class kahootCreationScreen extends JFrame {
 	private JList questionList;
 	private ArrayList<Pregunta> questions = new ArrayList<Pregunta>();
 	private ArrayList<Respuesta> respuestasFinales = new ArrayList<Respuesta>();
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					kahootCreationScreen frame = new kahootCreationScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public kahootCreationScreen() {
+	public kahootCreationScreen(final kahootManagerScreen kms, final JPanel kahootPanel, final JScrollPane kahootScrollPane, final KahootConfiguration config) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 532, 379);
 		setTitle("Create Kahoot");
@@ -392,6 +378,7 @@ public class kahootCreationScreen extends JFrame {
 						rd.saveRespuesta(respuesta);
 					}
 					dispose();
+					kms.setUpKahoots(kahootPanel, kahootScrollPane, config);
 					
 				}catch(CustomException ce) {
 					JOptionPane.showMessageDialog(null, ce.getMessageToShow(), "Aviso",

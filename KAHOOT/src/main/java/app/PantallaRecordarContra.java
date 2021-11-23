@@ -1,4 +1,4 @@
-package app;
+package main.java.app;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import hibernate.dao.UsuarioDao;
-import hibernate.model.Usuario;
+import main.java.hibernate.dao.UsuarioDao;
+import main.java.hibernate.model.Usuario;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -78,7 +78,7 @@ public class PantallaRecordarContra extends JFrame {
 					JOptionPane.showMessageDialog(null, "El usuario no existe", "Aviso",
 							JOptionPane.ERROR_MESSAGE);
 				}else {
-					String contra = user.getContraseña();
+					String contra = user.getContrasenia();
 					JOptionPane.showMessageDialog(null, "La contraseña es "+contra, "Contraseña",
 							JOptionPane.INFORMATION_MESSAGE);
 				}

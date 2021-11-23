@@ -1,10 +1,10 @@
-package conexion;
+package main.java.conexion;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import conexion.Interfaz;
+import main.java.conexion.Interfaz;
 import lipermi.exception.LipeRMIException;
 import lipermi.handler.CallHandler;
 import lipermi.net.IServerListener;
@@ -12,9 +12,6 @@ import lipermi.net.Server;
 
 public class Servidor implements Interfaz {
 	private ArrayList<String> concursantes = new ArrayList<String>();
-	public static void main(String[] args) {
-		new Servidor();
-	}
 
     public Servidor() {
         try {

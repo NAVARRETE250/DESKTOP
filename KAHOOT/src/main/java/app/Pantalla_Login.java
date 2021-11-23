@@ -1,4 +1,4 @@
-package app;
+package main.java.app;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -6,11 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
-import errorHandling.CustomException;
-import errorHandling.ErrorHandler;
-import hibernate.dao.UsuarioDao;
-import hibernate.model.Usuario;
-import readXML.DesktopTemplate;
+import main.java.errorHandling.CustomException;
+import main.java.errorHandling.ErrorHandler;
+import main.java.hibernate.dao.UsuarioDao;
+import main.java.hibernate.model.Usuario;
+import main.java.readXML.KahootConfiguration;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -33,30 +33,12 @@ public class Pantalla_Login extends JFrame {
 	private JTextField usuarioField;
 	private JPasswordField contraField;
 	static Usuario user;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		DesktopTemplate deskTemp = new DesktopTemplate();
-		deskTemp.readConfigFile();
-		System.out.println(deskTemp.getLanguage());
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Pantalla_Login frame = new Pantalla_Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public Pantalla_Login() {
+	public Pantalla_Login(final KahootConfiguration config) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 700);
@@ -72,11 +54,11 @@ public class Pantalla_Login extends JFrame {
 		lblKadamm.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 80));
 		lblKadamm.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel lblUsuario = new JLabel("Usuario");
+		JLabel lblUsuario = new JLabel("User");
 		lblUsuario.setFont(new Font("DialogInput", Font.BOLD, 24));
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel lblContrasea = new JLabel("Contraseña");
+		JLabel lblContrasea = new JLabel("Password");
 		lblContrasea.setFont(new Font("DialogInput", Font.BOLD, 24));
 		lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -87,25 +69,26 @@ public class Pantalla_Login extends JFrame {
 		contraField.setColumns(10);
 		
 		JLabel label = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/kahoot_logo.png")).getImage();
-		label.setIcon(new ImageIcon(img));
+		System.out.println(getClass().getClassLoader().getClass().getCanonicalName());
+//		Image img = new ImageIcon(this.getClass().getResource("/kahoot_logo.png")).getImage();
+//		label.setIcon(new ImageIcon(img));
 		
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.setBackground(new Color(102, 51, 153));
 		btnLogin.addActionListener(new ActionListener() {
-
+			
 			public void actionPerformed(ActionEvent arg0) {
 				UsuarioDao usDao = new UsuarioDao();
 				try {
 				user = usDao.getUsuarioByName(usuarioField.getText());
 				if (user == null) {
-					throw new CustomException("USUARIO no encontrado");
+					throw new CustomException("USER not found");
 				}else {
-					if (!user.getContraseña().equals(contraField.getText())) {
-						throw new CustomException("CONTRASEÑA incorrecta");
+					if (!user.getContrasenia().equals(new String(contraField.getPassword()))) {
+						throw new CustomException("Wrong PASSWORD");
 					}else {
-						//Abrir ventana gestión kahoots
-						kahootManagerScreen kms = new kahootManagerScreen();
+						//Abrir ventana gestion kahoots
+						kahootManagerScreen kms = new kahootManagerScreen(config);
 						kms.setVisible(true);
 						dispose();
 					}
@@ -119,7 +102,7 @@ public class Pantalla_Login extends JFrame {
 			
 		});
 		
-		JButton btnRecordarContrasea = new JButton("Recordar Contraseña");
+		JButton btnRecordarContrasea = new JButton("Recordar Contrasenia");
 		btnRecordarContrasea.setBackground(new Color(153, 51, 204));
 		btnRecordarContrasea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

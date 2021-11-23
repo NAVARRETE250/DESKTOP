@@ -1,8 +1,9 @@
-package app;
+package main.java.app;
 
-import hibernate.dao.*;
-import hibernate.model.Kahoot;
-import hibernate.model.Pregunta;
+import main.java.hibernate.dao.*;
+import main.java.hibernate.model.Kahoot;
+import main.java.hibernate.model.Pregunta;
+import main.java.readXML.KahootConfiguration;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -30,29 +31,15 @@ import javax.swing.BoxLayout;
 
 public class kahootManagerScreen extends JFrame {
 	private static Kahoot kahoot;
-
+	private List<Kahoot> kahoots;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					kahootManagerScreen frame = new kahootManagerScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public kahootManagerScreen() {
+	public kahootManagerScreen(final KahootConfiguration config) {
+		final kahootManagerScreen kms = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 597, 428);
 		contentPane = new JPanel();
@@ -61,7 +48,7 @@ public class kahootManagerScreen extends JFrame {
 		
 		JLabel lblKahoots = new JLabel("Kahoots");
 		
-		JScrollPane kahootScrollPane = new JScrollPane();
+		final JScrollPane kahootScrollPane = new JScrollPane();
 		
 		JScrollPane themeScrollPane = new JScrollPane();
 		
@@ -153,44 +140,10 @@ public class kahootManagerScreen extends JFrame {
 					.addGap(128))
 		);
 		
-		JPanel kahootPanel = new JPanel();
-		final List<Kahoot> kahoots = new KahootDao().getAllKahoots();
+		final JPanel kahootPanel = new JPanel();
 		
-		for (int i = 0; i < kahoots.size(); i++) {
-			JPanel newSubPanel = new JPanel();
-			JLabel kahootTitle = new JLabel(kahoots.get(i).getTitulo());
-			newSubPanel.add(kahootTitle);
-			final PlayButton playButton = new PlayButton("Play",i);
-			newSubPanel.add(playButton);
-			playButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					int posicion = playButton.getPosicion();
-					setKahoot(kahoots.get(posicion));
-					System.out.println("SE JUGARA EL KAHOOT "+kahoots.get(posicion).getTitulo());
-					Kahoot k = getKahoot();
-					List<Pregunta> preguntas = new KahootDao().getPreguntas(k);
-					for (Pregunta pregunta : preguntas) {
-						System.out.println(pregunta.getEnunciado());
-					}
-					SalaDeEspera sde;
-					try {
-						sde = new SalaDeEspera();
-						sde.setVisible(true);
-					} catch (SocketException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (UnknownHostException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				
-			});
-			kahootPanel.add(newSubPanel);
-		}
-
-		kahootScrollPane.setViewportView(kahootPanel);
-		kahootPanel.setLayout(new BoxLayout(kahootPanel, BoxLayout.Y_AXIS));
+		setUpKahoots(kahootPanel, kahootScrollPane, config);
+		
 		
 		JList selectedThemeList = new JList();
 		selectedThemescrollPane.setViewportView(selectedThemeList);
@@ -218,11 +171,13 @@ public class kahootManagerScreen extends JFrame {
 		});
 		btnCreateKahoot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				kahootCreationScreen kcs = new kahootCreationScreen();
+				kahootCreationScreen kcs = new kahootCreationScreen(kms, kahootPanel, kahootScrollPane, config);
 				kcs.setVisible(true);
 			}
 			
 		});
+		
+		setVisible(true);
 	}
 
 	public static Kahoot getKahoot() {
@@ -231,6 +186,50 @@ public class kahootManagerScreen extends JFrame {
 
 	public void setKahoot(Kahoot kahoot) {
 		this.kahoot = kahoot;
+	}
+	
+	public void setUpKahoots(JPanel kahootPanel, JScrollPane kahootScrollPane, final KahootConfiguration config) {
+		kahootPanel = new JPanel();
+		kahoots = new KahootDao().getAllKahoots();
+		
+		for (int i = 0; i < kahoots.size(); i++) {
+			JPanel newSubPanel = new JPanel();
+			
+			JLabel kahootTitle = new JLabel(kahoots.get(i).getTitulo());
+			newSubPanel.add(kahootTitle);
+			
+			final PlayButton playButton = new PlayButton("Play",i);
+			newSubPanel.add(playButton);
+			
+			playButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int posicion = playButton.getPosicion();
+					setKahoot(kahoots.get(posicion));
+					System.out.println("SE JUGARA EL KAHOOT "+kahoots.get(posicion).getTitulo());
+					Kahoot k = getKahoot();
+					List<Pregunta> preguntas = new KahootDao().getPreguntas(k);
+					for (Pregunta pregunta : preguntas) {
+						System.out.println(pregunta.getEnunciado());
+					}
+					SalaDeEspera sde;
+					try {
+						sde = new SalaDeEspera(config);
+						sde.setVisible(true);
+					} catch (SocketException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (UnknownHostException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			});
+			kahootPanel.add(newSubPanel);
+		}
+		kahootPanel.setLayout(new BoxLayout(kahootPanel, BoxLayout.Y_AXIS));
+		kahootScrollPane.setViewportView(kahootPanel);
+		
 	}
 	
 }

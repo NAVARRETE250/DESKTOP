@@ -1,4 +1,4 @@
-package hibernate.model;
+package main.java.hibernate.model;
 
 import java.util.List;
 

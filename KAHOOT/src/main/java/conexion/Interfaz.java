@@ -1,4 +1,4 @@
-package conexion;
+package main.java.conexion;
 
 import java.rmi.Remote;
 
