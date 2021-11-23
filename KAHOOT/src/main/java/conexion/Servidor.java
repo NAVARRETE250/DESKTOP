@@ -4,15 +4,19 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import main.java.conexion.Interfaz;
 import lipermi.exception.LipeRMIException;
 import lipermi.handler.CallHandler;
 import lipermi.net.IServerListener;
 import lipermi.net.Server;
+import main.java.hibernate.dao.RespuestaConcursoDao;
+import main.java.hibernate.model.Concursante;
+import main.java.hibernate.model.Respuesta;
+import main.java.hibernate.model.RespuestaConcurso;
 
 public class Servidor implements Interfaz {
 	private ArrayList<String> concursantes = new ArrayList<String>();
-
+	private RespuestaConcursoDao rcd = new RespuestaConcursoDao();
+	
     public Servidor() {
         try {
             CallHandler callHandler = new CallHandler();
@@ -46,6 +50,9 @@ public class Servidor implements Interfaz {
 		concursantes.add(username);
 	}
 
+	public void registerPlayerAnswer(Respuesta respuesta, Concursante concursante) {
+		rcd.saveRespuestaConcurso(new RespuestaConcurso(respuesta, concursante));
+	}
 }
 
 

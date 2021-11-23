@@ -14,6 +14,7 @@ import main.java.hibernate.model.Concursante;
 import main.java.hibernate.model.Concurso;
 import main.java.hibernate.model.Pregunta;
 import main.java.hibernate.model.Respuesta;
+import main.java.hibernate.model.RespuestaConcurso;
 
 
 public class HibernateUtil {
@@ -49,6 +50,7 @@ public class HibernateUtil {
 				configuration.addAnnotatedClass(Concurso.class);
 				configuration.addAnnotatedClass(Pregunta.class);
 				configuration.addAnnotatedClass(Respuesta.class);
+				configuration.addAnnotatedClass(RespuestaConcurso.class);
 
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();
