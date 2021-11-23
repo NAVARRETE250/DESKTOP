@@ -13,15 +13,24 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import conexion.Servidor;
+
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JScrollPane;
 
 public class SalaDeEspera extends JFrame {
 
 	private JPanel contentPane;
+	static Servidor server;
+	private JLabel lblTituloDelKahoot_1;
 
 	/**
 	 * Launch the application.
@@ -52,9 +61,11 @@ public class SalaDeEspera extends JFrame {
 		setContentPane(contentPane);
 		setTitle("SALA DE ESPERA");
 		
+		server = new Servidor();
+		
 		JLabel lblTituloDelKahoot = null;
 		try {
-			lblTituloDelKahoot = new JLabel(kahootManagerScreen.getKahoot().getTitulo());
+			lblTituloDelKahoot_1 = new JLabel(kahootManagerScreen.getKahoot().getTitulo());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,8 +99,10 @@ public class SalaDeEspera extends JFrame {
 		                i--;
 		                if (i < 0) {
 		                    timer.cancel();
+		                    server.setKahootStarted(true);
 		                    PantallaConcurso pc = new PantallaConcurso(0);
 		    				pc.setVisible(true);
+		    				dispose();
 		                }
 		            }
 		        }, 0, 1000);
@@ -97,23 +110,30 @@ public class SalaDeEspera extends JFrame {
 			
 		});
 		
+		JScrollPane scrollPane = new JScrollPane();
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addGap(21)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblEsperandoJugadores)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblTituloDelKahoot)
-							.addGap(117)
-							.addComponent(lblIp)))
-					.addPreferredGap(ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+							.addGap(21)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblTituloDelKahoot_1)
+									.addGap(117)
+									.addComponent(lblIp))
+								.addComponent(lblEsperandoJugadores)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblTempo)
 							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnComenzar)
 							.addGap(44))))
 		);
@@ -123,17 +143,22 @@ public class SalaDeEspera extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblTituloDelKahoot)
+								.addComponent(lblTituloDelKahoot_1)
 								.addComponent(lblIp))
 							.addGap(18)
 							.addComponent(lblEsperandoJugadores))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(45)
 							.addComponent(lblTempo)))
-					.addPreferredGap(ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
-					.addComponent(btnComenzar)
-					.addGap(28))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnComenzar)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
+		
+		JList list = server.getListaJugadores();
+		scrollPane.setViewportView(list);
 		contentPane.setLayout(gl_contentPane);
 
 

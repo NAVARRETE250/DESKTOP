@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import conexion.Servidor;
 import hibernate.dao.KahootDao;
 import hibernate.dao.PreguntaDao;
 import hibernate.model.Kahoot;
@@ -115,11 +116,13 @@ public class PantallaConcurso extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(ultimaPregunta) {
 					kahootManagerScreen kms = new kahootManagerScreen();
+					SalaDeEspera.server.closeServer();
 					kms.setVisible(true);
 				}else {
 					PantallaConcurso pc = new PantallaConcurso(ronda);
 					pc.setVisible(true);
 				}
+				dispose();
 			}
 			
 		});
