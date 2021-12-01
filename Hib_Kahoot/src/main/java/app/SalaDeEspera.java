@@ -100,7 +100,7 @@ public class SalaDeEspera extends JFrame {
 		                if (i < 0) {
 		                    timer.cancel();
 		                    server.setKahootStarted(true);
-		                    PantallaConcurso pc = new PantallaConcurso(0);
+		                    PantallaConcurso pc = new PantallaConcurso(0,server);
 		    				pc.setVisible(true);
 		    				dispose();
 		                }

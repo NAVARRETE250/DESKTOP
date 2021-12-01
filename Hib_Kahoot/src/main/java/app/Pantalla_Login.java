@@ -47,6 +47,7 @@ public class Pantalla_Login extends JFrame {
 		leng = deskTemp.getLanguage();
 		maxQuestions = deskTemp.getMaxQuestions();
 		timeout = deskTemp.getTimeout();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

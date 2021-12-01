@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 
 @Entity(name = "concursante")
 @Table(name = "concursante")
-public class Concursante {
+public class Concursante implements Comparable<Concursante>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_concursante")
@@ -73,6 +73,11 @@ public class Concursante {
 
 	public void setPuntuacion_total(int puntuacion_total) {
 		this.puntuacion_total = puntuacion_total;
+	}
+
+	@Override
+	public int compareTo(Concursante c) {
+		return c.getPuntuacion_total()-this.getPuntuacion_total();
 	}
 
 
