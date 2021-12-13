@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<configuracion>
-  <idioma>esp</idioma>
-  <timeout>30</timeout>
-  <max_preguntas>10</max_preguntas>
-  <ruta_xml_creacion></ruta_xml_creacion>
-</configuracion>
